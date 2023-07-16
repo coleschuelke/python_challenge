@@ -1,7 +1,10 @@
 import string
 
 lower = string.ascii_lowercase
+upper = string.ascii_uppercase
+alphabet = string.ascii_letters
 
+# the given text
 mess = """kAewtloYgcFQaJNhHVGxXDiQmzjfcpYbzxlWrVcqsmUbCunkfxZWDZjUZMiGqhRRiUvGmYmvnJIHEmbT
 MUKLECKdCthezSYBpIElRnZugFAxDRtQPpyeCBgBfaRVvvguRXLvkAdLOeCKxsDUvBBCwdpMMWmuELeG
 ENihrpCLhujoBqPRDPvfzcwadMMMbkmkzCCzoTPfbRlzBqMblmxTxNniNoCufprWXxgHZpldkoLCrHJq
@@ -1252,20 +1255,27 @@ wgDEIuvHFxRfQhtqLKnJfONtkcnDORkZqbtPplsjjTEIsquhSsQTwNZuPVxaTqDvwMONBfCsNJuJpJHZ
 dCdFLtBQPtFQuCdKOrpndJNUFQIDSbetUKylhSUjcDVtbiQrWMRQhAwGUZyPneCGUjGBBTkLqxLAXXtB
 KfErkDaWMFZZeuqDmXKJEGHyToPUhPphfVhgUZgbIuRAtWnroImpJKqqmEZqeNQCKzhjIkKQHURWLXFw
 PBuijeoTSpsVLaOGuLVjMZXkBvVXwUuHfBihziiavGSYofPNeKsTXruMUumRRPQJzvSzJkKbtSipiqBd"""
+newMess = ""
 left = ""
 
-for char in range(len(mess)):
-    lastThree = mess[char-3:char]
-    nextThree = mess[char+1:char+4]
-    ltu = lastThree.upper()
-    ntu = nextThree.upper()
+# get rid of weird characters that were messing with the slicing
+for i in mess:
+    if i in alphabet:
+        newMess += i
+    else:
+        pass
 
-    if mess[char] in lower:
-        if ltu == lastThree and ntu == nextThree:
-            if mess[char-4] in lower and mess[char+5] in lower:
-                left += mess[char]
-                print(lastThree)
-                print(mess[char])
-                print(nextThree)
+# loop over every character
+for i in range(4, len(newMess)-5):
+    lastThree = newMess[i-3:i]
+    nextThree = newMess[i+1:i+4] # sets up the slicing
+    interval = newMess[i-3:i+4]
 
+    # check the condiditions 
+    if newMess[i] in lower:
+        if lastThree.upper() == lastThree and nextThree.upper() == nextThree:
+            if newMess[i-4].lower() == newMess[i-4] and newMess[i+4].lower() == newMess[i+4]:
+                left+= newMess[i]
+
+# print the result
 print(left)
